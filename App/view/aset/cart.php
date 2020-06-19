@@ -40,7 +40,45 @@
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title"></div>
-            <div class="ibox-content"></div>
+            <div class="ibox-content">
+                <?= form_open('form'); ?>
+                
+                <?= form_text('Nama', 'nama'); ?>
+
+                <?= form_email('Email', 'email'); ?>
+
+                <?= form_line(); ?>
+
+                <?= form_text('Tanggal Mulai Sewa', 'tgl_mulai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
+
+
+                <?= form_text('Jam Mulai Sewa', 'jam_mulai', '', '', 'required readonly style="cursor:pointer"'); ?>
+
+                <?= form_line(); ?>
+
+                <?= form_text('Tanggal Selesai Sewa', 'tgl_selesai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
+
+                <?= form_text('Jam Selesai Sewa', 'jam_selesai', '', '', 'required readonly style="cursor:pointer"'); ?>
+
+                <?= form_line(); ?>
+
+                <?= form_area('Keterangan', 'keterangan'); ?>
+
+                <?= form_line(); ?>
+
+                <?= form_button('Simpan','simpan'); ?>
+
+                <?= form_close(); ?>
+            </div>
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(() => {
+
+        
+        
+    })
+</script>

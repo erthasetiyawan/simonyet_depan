@@ -12,6 +12,7 @@ $loader = new Ez\Loader;
 $loader->addNamespace('Ez', __DIR__ . '/Ez');
 $loader->addNamespace('App', __DIR__ . '/App');
 $loader->requireFile(__DIR__ . '/Ez/Function.php');
+$loader->requireFile(__DIR__ . '/Ez/Form.php');
 
 Ez\Env::file(__DIR__ . '/.env');
 Ez\Config::load(__DIR__ . '/config');
@@ -53,6 +54,7 @@ Ez\View::registerJs([
 	'assets/js/plugins/masonary/masonry.pkgd.min.js',
 	'assets/js/inspinia.js',
 	'assets/js/app.js',
+	'assets/js/monyet.js?v=' . sha1(microtime(true)),
 ]);
 
 $appconfig = (new Ez\Database)->table('pengaturan')->select()->one();
