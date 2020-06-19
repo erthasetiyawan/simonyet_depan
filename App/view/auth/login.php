@@ -39,6 +39,12 @@
         Daftar
     </a>
 
+    <br>
+    <a href="<?= url(); ?>">
+        <i class="fa fa-arrow-left"></i>
+        Kembali ke halaman depan
+    </a>
+
 </form>
 
 <p class="m-t">

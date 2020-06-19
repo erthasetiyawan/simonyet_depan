@@ -47,9 +47,10 @@ Ez\View::registerJs([
 	'assets/js/plugins/sweetalert/sweetalert.min.js',
 	'assets/js/plugins/datapicker/bootstrap-datepicker.js',
 	'assets/js/plugins/toastr/toastr.min.js',
-	'assets/js/isotope.min.js',
+	// 'assets/js/isotope.min.js',
 	'assets/js/plugins/nouslider/jquery.nouislider.min.js',
 	'assets/js/plugins/ionRangeSlider/ion.rangeSlider.min.js',
+	'assets/js/plugins/masonary/masonry.pkgd.min.js',
 	'assets/js/inspinia.js',
 	'assets/js/app.js',
 ]);

@@ -62,7 +62,7 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
                                     '<p>' + val.deskripsi.substring(0, val.deskripsi.indexOf('.') + 1) + '</p>' +
                                 '</div>' +
                                 '<div class="info">'+
-                                '<button class="btn btn-sm btn-default"><i class="fa fa-money"></i> '+ val.nilai_sewa.replace(/\B(?=(\d{3})+(?!\d))/g,".") +'</button>'+
+                                '<button class="btn btn-sm btn-default">Rp. '+ val.nilai_sewa.replace(/\B(?=(\d{3})+(?!\d))/g,".") +'</button>'+
                                 '<button class="btn btn-sm btn-default"><i class="fa fa-tag"></i> '+ val.urai_tarif+'</button>'+
                                 '</div>'+
                                 '<div class="cart">'+
@@ -79,18 +79,20 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
         }
 
-        
         $('#data_aset').html(html);
 
-        setTimeout(function() {
-            
-            $('.grid').isotope({
-                itemSelector: '.grid-item',
-                transitionDuration: '0.5s',
-                isAnimated: true,
-            });
+        var $grid = $('.grid').masonry({
+                    itemSelector: '.grid-item',
+                    transitionDuration: '0.5s',
+                    isAnimated: true,
+                });
 
-        }, 800);
+        $grid.masonry('destroy')
+
+        $grid.masonry();
+
+        $grid.masonry('reloadItems');
+        
 
     })
 
