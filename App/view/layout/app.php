@@ -26,11 +26,14 @@
                     </div>
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
-                            <li>
+                            <li class="<?= (isset($page) and $page == 'home') ? 'active' : null ?>">
                                 <a href="<?= url(); ?>">Home</a>
                             </li>
-                            <li>
+                            <li class="<?= (isset($page) and $page == 'aset') ? 'active' : null ?>">
                                 <a href="<?= url('app/aset/index'); ?>">Data Aset</a>
+                            </li>
+                            <li>
+                                <a href="">Data Penyewa</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
@@ -42,7 +45,8 @@
                                     <?= auth()->nama; ?> <span class="caret"></span>
                                 </a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="">Logout</a></li>
+                                    <li><a href="">Dashboard</a></li>
+                                    <li><a href="<?= url('app/auth/logout'); ?>">Logout</a></li>
                                 </ul>
                             </li>
                             <?php else: ?>

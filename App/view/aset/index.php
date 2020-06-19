@@ -42,8 +42,6 @@
 
 load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
-    const data = [];
-
     var options = {
                     itemSelector: '.grid-item',
                     transitionDuration: '0.5s',
@@ -54,7 +52,7 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
     $.getJSON(baseurl('app/aset/json?q=' + str + '&from=' + from + '&to=' + to + '&tarif=' + tarif + ''), function(result) {
 
-        data.push(result.data);
+        Pace.start();
 
         let html = '';
 
@@ -64,14 +62,16 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
                 html += '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 animated fadeIn grid-item">' +
                             '<div class="aset">' +
-                                '<img class="img-responsive" src="' + val.gambar + '">' +
+                                '<img style="width:100% !important" class="img-responsive" src="' + val.gambar + '">' +
                                 '<div class="content">' +
                                     '<h1><a>' + val.nama + '</a></h1>' +
                                     '<p>' + val.deskripsi.substring(0, val.deskripsi.indexOf('.') + 1) + '</p>' +
                                 '</div>' +
                                 '<div class="info">'+
+                                '<div class="input-group-btn">'+
                                 '<button class="btn btn-sm btn-default">Rp. '+ val.nilai_sewa.replace(/\B(?=(\d{3})+(?!\d))/g,".") +'</button>'+
                                 '<button class="btn btn-sm btn-default"><i class="fa fa-tag"></i> '+ val.urai_tarif+'</button>'+
+                                '</div>'+
                                 '</div>'+
                                 '<div class="cart">'+
                                     '<a href="'+baseurl('app/aset/cart?id=' + val.id)+'" data-login="<?= session('usertoken'); ?>" class="btn btn-warning cartAct"><i class="fa fa-shopping-cart"></i> Pesan</a>'+
@@ -90,8 +90,8 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
         $('#data_aset').html(html);
 
         $('.cartAct').on('click', function(e) {
-            e.preventDefault();
             if ($(this).data('login') === '') {
+                e.preventDefault();
                 swal({
                     title: 'Warning',
                     text: 'Silahkan login untuk melanjutkan!',
@@ -99,7 +99,7 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
                     showCancelButton: true,
                     confirmButtonText: 'Ya, Lanjutkan!'
                 }, function() {
-
+                    sessionStorage.setItem("sewa", true);
                     window.location.href = baseurl('app/auth/login');
                 })
             }
@@ -117,7 +117,7 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
         }, 800);
 
-        
+        Pace.stop();
 
     })
 

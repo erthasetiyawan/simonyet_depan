@@ -10,6 +10,7 @@
 
     <?php self::css() ?>
     <?php self::js() ?>
+    <script>const baseurl = (str) => { return '<?= url();?>' + str }</script>
 
 </head>
 

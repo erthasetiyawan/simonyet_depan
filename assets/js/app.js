@@ -101,7 +101,11 @@ const aifos = function() {
                         }, 1000)
 
                         setTimeout(function() {
-                            window.location.href = res.redirect
+                            if (sessionStorage.getItem("sewa") === '') {
+                                window.location.href = res.redirect
+                            }else{
+                                window.location.href = baseurl('app/aset/index');
+                            }
                         }, 2000)
                     }
                 }

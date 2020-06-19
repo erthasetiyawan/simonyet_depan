@@ -4,11 +4,12 @@ namespace App;
 use Ez\Database as DB;
 use Ez\View;
 use Ez\Request;
+use App\Controller as Controller;
 
 /**
  * summary
  */
-class AsetController
+class AsetController extends Controller
 {
     /**
      * summary
@@ -16,31 +17,18 @@ class AsetController
 
     protected $breadcrumb = [];
 
-    protected $db;
-
     public function __construct()
     {
     	$this->db = (new DB);
-    }
 
-    private function pushArray($query)
-    {
-        $data = [];
-
-        $query = $this->db->query($query);
-
-        while ($row = $this->db->assoc($query)) {
-            array_push($data, $row);
-        }
-
-        return $data;
+        $this->activPage('aset');
     }
 
     public function getIndex()
     {
-        $min = $this->db->assoc($this->db->query("select min(nilai_sewa) min_sewa from aset"))['min_sewa'];
+        $min = $this->toArray("select min(nilai_sewa) min_sewa from aset")['min_sewa'];
 
-        $max = $this->db->assoc($this->db->query("select max(nilai_sewa) max_sewa from aset"))['max_sewa'];
+        $max = $this->toArray("select max(nilai_sewa) max_sewa from aset")['max_sewa'];
 
         $tarif = $this->pushArray("select * from tarif");
 

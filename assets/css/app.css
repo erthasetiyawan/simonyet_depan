@@ -47,11 +47,8 @@
 }
 
 .notfound{
-	text-align: center;
-	align-items: center;
-	justify-content: center;
 	font-weight: bold;
-	font-size: 3em;
+	font-size: 2em;
 }
 
 .sweet-alert button.cancel {

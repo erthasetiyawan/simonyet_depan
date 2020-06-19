@@ -6,7 +6,6 @@ use Ez\Database as DB;
 use Ez\View;
 use Ez\Request;
 
-
 class BaseController
 {
 
