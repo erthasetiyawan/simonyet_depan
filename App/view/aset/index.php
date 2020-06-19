@@ -44,6 +44,14 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
     const data = [];
 
+    var options = {
+                    itemSelector: '.grid-item',
+                    transitionDuration: '0.5s',
+                    initLayout: false
+                };
+
+    var $grid = $('.grid').masonry(options);
+
     $.getJSON(baseurl('app/aset/json?q=' + str + '&from=' + from + '&to=' + to + '&tarif=' + tarif + ''), function(result) {
 
         data.push(result.data);
@@ -66,7 +74,7 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
                                 '<button class="btn btn-sm btn-default"><i class="fa fa-tag"></i> '+ val.urai_tarif+'</button>'+
                                 '</div>'+
                                 '<div class="cart">'+
-                                        '<a href="'+baseurl('app/aset/cart?id=' + val.id)+'" class="btn btn-warning"><i class="fa fa-shopping-cart"></i> Pesan</a>'+
+                                    '<a href="'+baseurl('app/aset/cart?id=' + val.id)+'" data-login="<?= session('usertoken'); ?>" class="btn btn-warning cartAct"><i class="fa fa-shopping-cart"></i> Pesan</a>'+
                                 '</div>' +
                             '</div>' +
                         '</div>';
@@ -75,23 +83,40 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
         }else{
 
-            html += '<div class="notfound">Tidak ada data untuk ditampilkkan</div>';
+            html += '<div class="notfound">Tidak ada data untuk ditampilkan</div>';
 
         }
 
         $('#data_aset').html(html);
 
-        var $grid = $('.grid').masonry({
-                    itemSelector: '.grid-item',
-                    transitionDuration: '0.5s',
-                    isAnimated: true,
-                });
+        $('.cartAct').on('click', function(e) {
+            e.preventDefault();
+            if ($(this).data('login') === '') {
+                swal({
+                    title: 'Warning',
+                    text: 'Silahkan login untuk melanjutkan!',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Lanjutkan!'
+                }, function() {
 
-        $grid.masonry('destroy')
+                    window.location.href = baseurl('app/auth/login');
+                })
+            }
+        })
 
-        $grid.masonry();
+        setTimeout(function() {
+        
+            $grid.masonry();
 
-        $grid.masonry('reloadItems');
+            $grid.masonry('destroy')
+
+            $grid.masonry();
+
+            $grid.masonry('reloadItems');
+
+        }, 800);
+
         
 
     })

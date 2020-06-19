@@ -53,3 +53,11 @@
 	font-weight: bold;
 	font-size: 3em;
 }
+
+.sweet-alert button.cancel {
+    background-color: #F44336 !important;
+}
+
+.sweet-alert button.confirm {
+	background-color: #2196F3 !important;
+}
