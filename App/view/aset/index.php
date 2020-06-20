@@ -24,7 +24,7 @@
                 <input type="hidden" class="kode_tarif">
             </div>
             <div class="ibox-content">
-                <div id="range_slider"></div>
+                <div id="range_slider" style="width: 100% !important"></div>
                 <div style="padding: 20px;padding-bottom:0;text-align: center;">
                     <label>Rp. <span class="dari"><?= number_format($min,0,',','.'); ?></span></label>
                     &nbsp;&nbsp;-&nbsp;&nbsp;
@@ -41,6 +41,6 @@
 <script>
     var min = <?= $min; ?>;
     var max = <?= $max; ?>;
-    var token = '<?= session('usertoken'); ?>';
+    var token = '<?= str_replace(["\n","\r"], '', session('usertoken')); ?>';
 </script>
 <script type="text/javascript" src="/kuliah/simonyet/assets/js/monyet.js?v=<?= sha1(microtime(true)); ?>"></script>

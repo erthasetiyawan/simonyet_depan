@@ -68,7 +68,7 @@ class AuthController
 		return [
 			'status' => 'success',
 			'flash' => 'Selamat datang kembali ' . $pengguna['nama'],
-			'redirect' => url(),
+			'redirect' => url('app/dashboard/index'),
 			'reset_fields' => [
 				'password'
 			]

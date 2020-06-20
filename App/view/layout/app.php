@@ -16,7 +16,7 @@
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom white-bg">
-                <nav class="navbar navbar-static-top" role="navigation">
+                <nav class="navbar navbar-fixed-top" role="navigation">
                     <div class="navbar-header">
                         <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                             <i class="fa fa-reorder"></i>
@@ -60,7 +60,7 @@
                     </div>
                 </nav>
             </div>
-            <div class="wrapper wrapper-content">
+            <div class="wrapper wrapper-content" style="margin-top: 50px">
                 <div class="container-fluid">
                     <?php self::content(); ?>
                 </div>

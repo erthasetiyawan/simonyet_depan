@@ -1,3 +1,7 @@
+var min = min;
+var max = max;
+var token = token;
+
 load_data_aset = (str = '', from = '', to = '', tarif = '') => {
 
     var options = {

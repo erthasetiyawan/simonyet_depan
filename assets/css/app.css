@@ -58,3 +58,7 @@
 .sweet-alert button.confirm {
 	background-color: #2196F3 !important;
 }
+
+.navbar{
+	box-shadow: 0 2px 10px rgba(50,50,93,.1);
+}
