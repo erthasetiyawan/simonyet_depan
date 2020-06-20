@@ -154,13 +154,16 @@ class AsetController extends Controller
         }
 
 
-        // Coba buat validasi lagi di backend nya ^-^
+        /* 
+            Coba buat validasi lagi di backend nya ^-^
+        */
 
         $insert = $this->db->table('sewa')->insert([
             'id_pengguna' => $id_user,
             'id_aset' => $kode,
             'id_tarif' => $tarif,
             'token' => $token,
+            'durasi' => $durasi,
             'tgl_mulai' => $tgl_mulai,
             'jam_mulai' => $jam_mulai,
             'tgl_selesai' => $tgl_selesai,
@@ -191,7 +194,23 @@ class AsetController extends Controller
 
     public function getSuccess()
     {
-        View::render('App.view.aset.sukses');
+        $token = Request::data('token');
+
+        $sewa = $this->db->table('sewa')->select()->where([
+            'token' => $token,
+            'id_pengguna' => auth()->id
+        ])->get();
+
+        if (count($sewa)) {
+            
+            View::render('App.view.aset.sukses');
+            
+        }else{
+
+            redirect('app/aset/index');
+
+        }
+
     }
 
     public function ajaxPostPertarif()

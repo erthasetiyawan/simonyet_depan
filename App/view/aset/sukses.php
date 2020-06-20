@@ -16,7 +16,7 @@
 			</div>
 			<div class="ibox-content">
 				<div class="text-center">
-					<button class="btn btn-default" onclick="window.location.href = '<?= url('app/dasboard/index'); ?>'">Tidak</button>
+					<button class="btn btn-default" onclick="window.location.href = '<?= url('app/dashboard/index'); ?>'">Tidak</button>
 					<button class="btn btn-primary" onclick="window.location.href = '<?= url('app/aset/index'); ?>'">Ya, Lanjutkan!</button>
 				</div>
 			</div>

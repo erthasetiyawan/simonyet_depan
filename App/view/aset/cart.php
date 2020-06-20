@@ -194,9 +194,13 @@
                             
                             toastr.success(res.pesan);
 
+                        }, 2000);
+
+                        setTimeout(function() {
+                            
                             window.location.href = res.redirect;
 
-                        }, 2000);
+                        }, 3000);
 
                     }else{
 
