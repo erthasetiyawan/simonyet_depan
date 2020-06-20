@@ -5,6 +5,10 @@ use Ez\Database as DB;
 use Ez\Request;
 use Ez\View;
 
+/**
+ * @author Ertha Dwi Setiyawan
+ */
+
 class DashboardController extends Controller
 {
     

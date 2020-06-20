@@ -6,7 +6,7 @@ use Ez\View;
 use Ez\Request;
 
 /**
- * summary
+ * @author Ertha Dwi Setiyawan
  */
 class AsetController extends Controller
 {
@@ -77,5 +77,155 @@ class AsetController extends Controller
         $tarif = $this->toArray("select * from tarif where id = " . $data['tarif'] . "");
 
         View::render('App.view.aset.cart', compact('data', 'tarif'));
+    }
+
+    public function ajaxPostPertarif()
+    {
+
+        $input = new \stdClass;
+        $input->tarif = intval(Request::data()->tarif);
+
+        if ($input->tarif === PER_JAM) {
+            
+            $input->lama_sewa = intval(Request::data()->durasi);
+            $input->mulai = trim(Request::data()->jam_mulai);
+            $input->tgl_mulai = date(Request::data()->tgl_mulai);
+
+            if($input->lama_sewa === 0 || empty($input->mulai)){
+
+                $jam_selesai = "";
+                $tgl_selesai = "";
+
+            }else{
+
+                if (empty($input->tgl_mulai)) {
+                    
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' hours', strtotime($input->mulai)));
+
+                }else{
+
+                    $gabung = date($input->tgl_mulai) . ' ' . date($input->mulai);
+
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' hours', strtotime($gabung)));
+
+                }
+
+                list($tgl_selesai,$jam_selesai) = explode(' ', $mulai);
+            }
+
+            die(json_encode([
+                "jam_selesai" => $jam_selesai,
+                "tgl_selesai" => $tgl_selesai
+            ]));
+
+        }elseif ($input->tarif === PER_HARI) {
+            
+            $input->lama_sewa = intval(Request::data()->durasi);
+            $input->mulai = trim(Request::data()->jam_mulai);
+            $input->tgl_mulai = date(Request::data()->tgl_mulai);
+
+            if($input->lama_sewa === 0 || empty($input->mulai)){
+
+                $jam_selesai = "";
+                $tgl_selesai = "";
+
+            }else{
+
+                if (empty($input->tgl_mulai)) {
+                    
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' day', strtotime($input->mulai)));
+
+                }else{
+
+                    $gabung = date($input->tgl_mulai) . ' ' . date($input->mulai);
+
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' day', strtotime($gabung)));
+
+                }
+
+
+                list($tgl_selesai,$jam_selesai) = explode(' ', $mulai);
+
+            }
+
+            die(json_encode([
+                "jam_selesai" => $jam_selesai,
+                "tgl_selesai" => $tgl_selesai
+            ]));
+
+
+        }elseif ($input->tarif === PER_BULAN) {
+
+            $input->lama_sewa = intval(Request::data()->durasi);
+            $input->mulai = trim(Request::data()->jam_mulai);
+            $input->tgl_mulai = date(Request::data()->tgl_mulai);
+
+            if($input->lama_sewa === 0 || empty($input->mulai)){
+
+                $jam_selesai = "";
+                $tgl_selesai = "";
+
+            }else{
+
+                if (empty($input->tgl_mulai)) {
+                    
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' month', strtotime($input->mulai)));
+
+                }else{
+
+                    $gabung = date($input->tgl_mulai) . ' ' . date($input->mulai);
+
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' month', strtotime($gabung)));
+
+                }
+
+
+                list($tgl_selesai,$jam_selesai) = explode(' ', $mulai);
+
+            }
+
+            die(json_encode([
+                "jam_selesai" => $jam_selesai,
+                "tgl_selesai" => $tgl_selesai
+            ]));
+
+
+        }elseif ($input->tarif === PER_TAHUN) {
+            
+            $input->lama_sewa = intval(Request::data()->durasi);
+            $input->mulai = trim(Request::data()->jam_mulai);
+            $input->tgl_mulai = date(Request::data()->tgl_mulai);
+
+            if($input->lama_sewa === 0 || empty($input->mulai)){
+
+                $jam_selesai = "";
+                $tgl_selesai = "";
+
+            }else{
+
+                if (empty($input->tgl_mulai)) {
+                    
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' year', strtotime($input->mulai)));
+
+                }else{
+
+                    $gabung = date($input->tgl_mulai) . ' ' . date($input->mulai);
+
+                    $mulai = date('Y-m-d H:i', strtotime('+'.$input->lama_sewa.' year', strtotime($gabung)));
+
+                }
+
+
+                list($tgl_selesai,$jam_selesai) = explode(' ', $mulai);
+
+            }
+
+            die(json_encode([
+                "jam_selesai" => $jam_selesai,
+                "tgl_selesai" => $tgl_selesai
+            ]));
+
+        }
+
     }
 }

@@ -43,18 +43,18 @@
             <div class="ibox-title"></div>
             <div class="ibox-content">
                 
-                <?= form_text('Nama', 'nama', auth()->nama); ?>
+                <?= form_text('Nama', 'nama', auth()->nama, 'user', '', 'required readonly'); ?>
 
-                <?= form_email('Email', 'email', auth()->email); ?>
+                <?= form_email('Email', 'email', auth()->email, 'envelope', '', 'required readonly'); ?>
 
-                <?= form_text('Telp. (Mobile)', 'telp', auth()->notelepon); ?>
+                <?= form_text('Telp. (Mobile)', 'telp', auth()->notelepon, 'mobile-phone', '', 'required readonly'); ?>
 
             </div>
 
             <div class="ibox-content">
-                <?= form_text('Tanggal Mulai Sewa', 'tgl_mulai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
+                <?= form_text('Tanggal Mulai Sewa', 'tgl_mulai', date('Y-m-d'), 'calendar','', 'required readonly style="cursor:pointer"'); ?>
 
-                <?= form_text('Jam Mulai Sewa', 'jam_mulai', '', '', 'required readonly style="cursor:pointer"'); ?>
+                <?= form_text('Jam Mulai Sewa', 'jam_mulai', date('H:i'), 'clock-o','', 'required readonly style="cursor:pointer"'); ?>
 
                 <?= form_line(); ?>
 
@@ -62,7 +62,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label id="durasi">Durasi</label>
                         <div class="input-group">
-                            <input type="number" placeholder="Durasi" class="form-control durasi" id="durasi" name="durasi" value="0" required="" min="1">
+                            <input type="number" placeholder="Durasi" class="form-control durasi" id="durasi" name="durasi" value="1" required="" min="1">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"><b>Jam</b></button>
                             </span>
@@ -72,9 +72,19 @@
 
                 <?= form_line(); ?>
 
-                <?= form_text('Tanggal Selesai Sewa', 'tgl_selesai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
+                <?= form_text('Tanggal Selesai Sewa', 'tgl_selesai', date('Y-m-d'),'calendar', '', 'required readonly style="cursor:pointer"'); ?>
 
-                <?= form_text('Jam Selesai Sewa', 'jam_selesai', '', '', 'required readonly style="cursor:pointer"'); ?>
+                <?= form_text('Jam Selesai Sewa', 'jam_selesai', date('H:i'), 'clock-o', '', 'required readonly style="cursor:pointer"'); ?>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <?= form_text('Harga Sewa', 'harga_sewa', number_format($data['nilai_sewa'],0, ',', '.'), 'money', '', 'required readonly style="text-align:right"'); ?>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <?= form_text('Total Harga Sewa', 'total_harga_sewa',number_format($data['nilai_sewa'],0, ',', '.'), 'money', '', 'required readonly style="text-align:right"'); ?>
+                    </div>
+                </div>
             </div>
             <div class="ibox-content">
                 <?= form_area('Keterangan', 'keterangan'); ?>
@@ -90,17 +100,54 @@
 
 
 <script type="text/javascript">
-    $(() => {
 
-        $('.tgl_mulai').datepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true
-        });
+    var tarif = <?= $tarif['id']; ?>;
+    var nilai_sewa = '<?= number_format($data['nilai_sewa'],0,',',''); ?>';
 
-        $('.jam_mulai').clockpicker({
-            align: 'left',
-            donetext: 'Done'
-        });
-        
+    itung_durasi = () => {
+
+        $.ajax({
+            url: baseurl('app/aset/pertarif'),
+            type: "post",
+            data: {
+                tarif: tarif,
+                durasi: $('.durasi').val(),
+                tgl_mulai: $('.tgl_mulai').val(),
+                jam_mulai: $('.jam_mulai').val()
+            },
+            dataType: "json",
+            success:function(res){
+
+                $('.tgl_selesai').val(res.tgl_selesai);
+                $('.jam_selesai').val(res.jam_selesai);
+
+                $('.total_harga_sewa').val((parseInt(nilai_sewa) * parseInt($('.durasi').val())).toString().replace(/\B(?=(\d{3})+(?!\d))/g,"."));
+
+            }
+        }) 
+
+    }
+
+    $('.tgl_mulai').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+    }).on('change', function(res) {
+        itung_durasi();
+    });
+
+    $('.jam_mulai').clockpicker({
+        align: 'left',
+        donetext: 'Done'
+    }).on('change', function() {
+        itung_durasi()
+    });
+
+    $('.durasi').on('change keyup keypress', function(e) {
+
+        itung_durasi()
+            
     })
+
+    itung_durasi();
+        
 </script>

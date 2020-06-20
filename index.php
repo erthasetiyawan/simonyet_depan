@@ -17,6 +17,11 @@ $loader->requireFile(__DIR__ . '/Ez/Form.php');
 Ez\Env::file(__DIR__ . '/.env');
 Ez\Config::load(__DIR__ . '/config');
 
+define('PER_JAM', 1);
+define('PER_HARI', 2);
+define('PER_BULAN', 3);
+define('PER_TAHUN', 4);
+
 date_default_timezone_set(config('app.time'));
 
 Ez\ErrorHandler::register();
