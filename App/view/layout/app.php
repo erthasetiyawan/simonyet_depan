@@ -45,7 +45,7 @@
                                     <?= auth()->nama; ?> <span class="caret"></span>
                                 </a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="">Dashboard</a></li>
+                                    <li><a href="<?= url('app/dashboard/index'); ?>">Dashboard</a></li>
                                     <li><a href="<?= url('app/auth/logout'); ?>">Logout</a></li>
                                 </ul>
                             </li>

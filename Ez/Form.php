@@ -36,15 +36,12 @@ if (!function_exists('form_text')) {
 }
 
 if (!function_exists('form_number')) {
-	function form_number($label = '',$name = '',$value = '',$msg = '',$attribute = 'required') {
-
-		if(!empty($msg)) $msg = '<br/>' . $msg . '';
+	function form_number($label = '',$name = '',$value = '',$attribute = 'required') {
 			
 		$html = '<div class="form-group">
 					<label id="'.$name.'">'.$label.'</label>
 			        <div>
 			        	<input type="number" placeholder="'.$label.'" class="form-control '.$name.'" id="'.$name.'" name="'.$name.'" value="'.$value.'" '.$attribute.'>
-			        	'.$msg.'
 			        </div>
 			    </div>';
 

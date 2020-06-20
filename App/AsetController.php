@@ -4,7 +4,6 @@ namespace App;
 use Ez\Database as DB;
 use Ez\View;
 use Ez\Request;
-use App\Controller as Controller;
 
 /**
  * summary
@@ -75,6 +74,8 @@ class AsetController extends Controller
         
         $data = $this->db->table('aset a, tarif t')->where('a.id', '=', $id)->where('a.tarif', '=', 't.id')->select('a.*, t.urai as urai_tarif')->one();
 
-        View::render('App.view.aset.cart', compact('data'));
+        $tarif = $this->toArray("select * from tarif where id = " . $data['tarif'] . "");
+
+        View::render('App.view.aset.cart', compact('data', 'tarif'));
     }
 }

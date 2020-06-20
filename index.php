@@ -32,9 +32,11 @@ Ez\View::registerCss([
 	'assets/css/plugins/iCheck/custom.css',
 	'assets/css/plugins/toastr/toastr.min.css',
 	'assets/css/plugins/sweetalert/sweetalert.css',
+	'assets/css/plugins/datapicker/datepicker3.css',
 	'assets/css/plugins/nouslider/jquery.nouislider.css',
 	'assets/css/plugins/ionRangeSlider/ion.rangeSlider.css',
 	'assets/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css',
+	'assets/css/plugins/clockpicker/clockpicker.css',
 	'assets/css/style.css',
 	'assets/css/app.css?v=' . sha1(microtime(true))
 ]);
@@ -48,13 +50,13 @@ Ez\View::registerJs([
 	'assets/js/plugins/slimscroll/jquery.slimscroll.min.js',
 	'assets/js/plugins/sweetalert/sweetalert.min.js',
 	'assets/js/plugins/datapicker/bootstrap-datepicker.js',
+	'assets/js/plugins/clockpicker/clockpicker.js',
 	'assets/js/plugins/toastr/toastr.min.js',
 	'assets/js/plugins/nouslider/jquery.nouislider.min.js',
 	'assets/js/plugins/ionRangeSlider/ion.rangeSlider.min.js',
 	'assets/js/plugins/masonary/masonry.pkgd.min.js',
 	'assets/js/inspinia.js',
 	'assets/js/app.js',
-	'assets/js/monyet.js?v=' . sha1(microtime(true)),
 ]);
 
 $appconfig = (new Ez\Database)->table('pengaturan')->select()->one();

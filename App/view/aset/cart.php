@@ -38,39 +38,53 @@
         </div>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <?= form_open('form'); ?>
         <div class="ibox float-e-margins">
             <div class="ibox-title"></div>
             <div class="ibox-content">
-                <?= form_open('form'); ?>
                 
-                <?= form_text('Nama', 'nama'); ?>
+                <?= form_text('Nama', 'nama', auth()->nama); ?>
 
-                <?= form_email('Email', 'email'); ?>
+                <?= form_email('Email', 'email', auth()->email); ?>
+
+                <?= form_text('Telp. (Mobile)', 'telp', auth()->notelepon); ?>
+
+            </div>
+
+            <div class="ibox-content">
+                <?= form_text('Tanggal Mulai Sewa', 'tgl_mulai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
+
+                <?= form_text('Jam Mulai Sewa', 'jam_mulai', '', '', 'required readonly style="cursor:pointer"'); ?>
 
                 <?= form_line(); ?>
 
-                <?= form_text('Tanggal Mulai Sewa', 'tgl_mulai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
-
-
-                <?= form_text('Jam Mulai Sewa', 'jam_mulai', '', '', 'required readonly style="cursor:pointer"'); ?>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label id="durasi">Durasi</label>
+                        <div class="input-group">
+                            <input type="number" placeholder="Durasi" class="form-control durasi" id="durasi" name="durasi" value="0" required="" min="1">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><b>Jam</b></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
                 <?= form_line(); ?>
 
                 <?= form_text('Tanggal Selesai Sewa', 'tgl_selesai', date('Y-m-d'), '', 'required readonly style="cursor:pointer"'); ?>
 
                 <?= form_text('Jam Selesai Sewa', 'jam_selesai', '', '', 'required readonly style="cursor:pointer"'); ?>
-
-                <?= form_line(); ?>
-
+            </div>
+            <div class="ibox-content">
                 <?= form_area('Keterangan', 'keterangan'); ?>
 
                 <?= form_line(); ?>
 
                 <?= form_button('Simpan','simpan'); ?>
-
-                <?= form_close(); ?>
             </div>
         </div>
+        <?= form_close(); ?>
     </div>
 </div>
 
@@ -78,7 +92,15 @@
 <script type="text/javascript">
     $(() => {
 
-        
+        $('.tgl_mulai').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true
+        });
+
+        $('.jam_mulai').clockpicker({
+            align: 'left',
+            donetext: 'Done'
+        });
         
     })
 </script>
