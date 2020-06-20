@@ -42,6 +42,9 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title"></div>
             <div class="ibox-content">
+
+                <input type="hidden" name="kode" value="<?= $data['id']; ?>">
+                <input type="hidden" name="tarif" value="<?= $data['tarif']; ?>">
                 
                 <?= form_text('Nama', 'nama', auth()->nama, 'user', '', 'required readonly'); ?>
 
@@ -101,7 +104,7 @@
 
 <script type="text/javascript">
 
-    var tarif = <?= $tarif['id']; ?>;
+    var tarif = <?= $data['tarif']; ?>;
     var nilai_sewa = '<?= number_format($data['nilai_sewa'],0,',',''); ?>';
 
     itung_durasi = () => {
@@ -149,5 +152,53 @@
     })
 
     itung_durasi();
+
+    $('#form').on('submit', function(e) {
+        
+        e.preventDefault();
+
+        var form = $(this);
+
+        swal({
+            title: 'Information',
+            text: 'Anda yakin ingin melanjutkan sewa aset ini?',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Lanjutkan!'
+        }, function() {
+
+            $.ajax({
+                url: baseurl('app/aset/simpan'),
+                type: "post",
+                data: form.serializeArray(),
+                dataType: "json",
+                beforeSend: function(){
+                    toastr.info('Sedang memproses keinginan Anda...');
+                },
+                success:function(res){
+
+                    if (res.status == "sukses") {
+                        
+                        setTimeout(function() {
+                            
+                            toastr.success(res.pesan);
+
+                        }, 2000);
+
+                        setTimeout(function() {
+                            
+                            window.location.reload();
+
+                        }, 3000);
+
+                    }
+                }
+
+            })
+
+        })
+
+
+    })
         
 </script>

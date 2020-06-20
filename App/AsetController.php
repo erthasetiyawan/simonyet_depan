@@ -79,6 +79,16 @@ class AsetController extends Controller
         View::render('App.view.aset.cart', compact('data', 'tarif'));
     }
 
+    public function ajaxPostSimpan()
+    {
+
+        die(json_encode([
+            "status" => "sukses",
+            "pesan" => "Pemesanan Aset berhasil! Mengalihkan..."
+        ]));
+        dd(Request::data());
+    }
+
     public function ajaxPostPertarif()
     {
 
