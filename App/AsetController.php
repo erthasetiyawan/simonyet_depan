@@ -80,13 +80,118 @@ class AsetController extends Controller
     }
 
     public function ajaxPostSimpan()
-    {
+    {   
 
-        die(json_encode([
-            "status" => "sukses",
-            "pesan" => "Pemesanan Aset berhasil! Mengalihkan..."
-        ]));
-        dd(Request::data());
+        $post = Request::data();
+
+        $kode = intval($post->kode);
+        $tarif = intval($post->tarif);
+        $id_user = intval(auth()->id);
+        $token = str_replace(["\n","\r"], "", session('usertoken'));
+        $tgl_mulai = date('Y-m-d', strtotime($post->tgl_mulai));
+        $jam_mulai = date('H:i', strtotime($post->jam_mulai));
+        $durasi = intval($post->durasi);
+        $tgl_selesai = date('Y-m-d', strtotime($post->tgl_selesai));
+        $jam_selesai = date('H:i', strtotime($post->jam_selesai));
+        $keterangan = trim($post->keterangan);
+
+        $aset = $this->toArray("select * from aset where id = " . $kode . "");
+
+        $sewa = $this->pushArray("select * from sewa where id_aset = " . $aset['id'] . "");
+
+        $cek_sewa = $this->pushArray("select * from sewa where id_pengguna = " . $id_user . " and status = 0");
+
+        $total_harga_sewa = $durasi * $aset['nilai_sewa'];
+
+        $datetime = [];
+        $datetime_range = [];
+
+        foreach ($sewa as $values) {
+
+            /* Hitung Jam */
+
+            $e_mulai = new \DateTime($values['tgl_mulai'] . ' ' . $values['jam_mulai']);
+            $e_selesai = new \DateTime($values['tgl_selesai'] . ' ' . $values['jam_selesai']);
+            $e_selesai = $e_selesai->modify('+1 minutes');
+
+            $jam_interval = new \DateInterval('PT1M');
+            $jamRange = new \DatePeriod($e_mulai, $jam_interval, $e_selesai);
+
+            foreach ($jamRange as $j => $k) {
+                
+                array_push($datetime, $k->format('Y-m-d H:i'));
+
+            }
+
+            /* Hitung Tanggal Sewa Sekarang */
+
+            $begins = new \DateTime($tgl_mulai . ' ' . $jam_mulai);
+            $ends = new \DateTime($tgl_selesai . ' ' . $jam_selesai);
+            $ends = $ends->modify( '+1 minutes' );
+
+            $intervals = new \DateInterval('PT1M');
+            $dateRanges = new \DatePeriod($begins, $intervals ,$ends);
+
+            foreach ($dateRanges as $keys => $values) {
+                
+                array_push($datetime_range, $values->format('Y-m-d H:i'));
+
+            }
+            
+        }
+
+        foreach ($datetime_range as $r => $rq) {
+            
+            if (in_array($rq, $datetime)) {       
+
+                die(json_encode([
+                    "status"    => "gagal",
+                    "pesan"     => "Aset ini sudah dipesan pada jam, tanggal tersebut!"
+                ]));
+
+            }
+
+        }
+
+
+        // Coba buat validasi lagi di backend nya ^-^
+
+        $insert = $this->db->table('sewa')->insert([
+            'id_pengguna' => $id_user,
+            'id_aset' => $kode,
+            'id_tarif' => $tarif,
+            'token' => $token,
+            'tgl_mulai' => $tgl_mulai,
+            'jam_mulai' => $jam_mulai,
+            'tgl_selesai' => $tgl_selesai,
+            'jam_selesai' => $jam_selesai,
+            'harga_sewa' => $aset['nilai_sewa'],
+            'total_harga_sewa' => $total_harga_sewa,
+            'keterangan' => $keterangan
+        ]);
+
+        if ($insert->run()) {
+            
+            die(json_encode([
+                "status" => "sukses",
+                "pesan" => "Pemesanan Aset berhasil!",
+                "redirect" => url("app/aset/success?token=" . $token)
+            ]));
+
+        }else{
+
+            die(json_encode([
+                "status" => "gagal",
+                "pesan" => "Pemesanan Aset Anda tidak dapat diproses!"
+            ]));
+
+        }
+
+    }
+
+    public function getSuccess()
+    {
+        View::render('App.view.aset.sukses');
     }
 
     public function ajaxPostPertarif()

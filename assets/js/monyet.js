@@ -31,7 +31,7 @@ load_data_aset = (str = '', from = '', to = '', tarif = '') => {
                                 '</div>' +
                                 '<div class="info">'+
                                 '<div class="input-group-btn">'+
-                                '<button class="btn btn-sm btn-default">Rp. '+ val.nilai_sewa.replace(/\B(?=(\d{3})+(?!\d))/g,".") +'</button>'+
+                                '<button class="btn btn-sm btn-default">Rp. '+ val.nilai_sewa.replace(".00", "").replace(/\B(?=(\d{3})+(?!\d))/g,".") +'</button>'+
                                 '<button class="btn btn-sm btn-default"><i class="fa fa-tag"></i> '+ val.urai_tarif+'</button>'+
                                 '</div>'+
                                 '</div>'+

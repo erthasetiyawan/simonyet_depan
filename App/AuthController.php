@@ -63,7 +63,7 @@ class AuthController
 		}
 
 		session('userid', $pengguna['id']);
-		session('usertoken', generateToken());
+		session('usertoken', getToken());
 		
 		return [
 			'status' => 'success',

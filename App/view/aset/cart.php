@@ -94,7 +94,14 @@
 
                 <?= form_line(); ?>
 
-                <?= form_button('Simpan','simpan'); ?>
+                <div class="form-group">
+                    <div>
+                        <button type="button" onclick="window.location.href = baseurl('app/aset/index');" class="btn btn-white back">
+                            Kembali
+                        </button>
+                        <button class="btn btn-primary simpan" data-name="Simpan" name="simpan">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
         <?= form_close(); ?>
@@ -167,6 +174,10 @@
             confirmButtonText: 'Ya, Lanjutkan!'
         }, function() {
 
+            $('button.simpan').attr('disabled','disabled');
+            $('button.back').attr('disabled','disabled');
+            $('button.simpan').html('<i class="fa fa-circle-o-notch fa-spin"></i> Proses...')
+
             $.ajax({
                 url: baseurl('app/aset/simpan'),
                 type: "post",
@@ -183,13 +194,21 @@
                             
                             toastr.success(res.pesan);
 
+                            window.location.href = res.redirect;
+
                         }, 2000);
+
+                    }else{
 
                         setTimeout(function() {
                             
-                            window.location.reload();
+                            toastr.error(res.pesan);
 
-                        }, 3000);
+                            $('button.simpan').removeAttr('disabled');
+                            $('button.back').removeAttr('disabled');
+                            $('button.simpan').html('Submit');
+
+                        }, 2000);
 
                     }
                 }
