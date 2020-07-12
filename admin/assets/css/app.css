@@ -1,0 +1,12 @@
+.table thead tr th {
+	text-align: center !important;
+	padding: 10px !important;
+}
+
+.sweet-alert button.cancel {
+    background-color: #F44336 !important;
+}
+
+.sweet-alert button.confirm {
+	background-color: #2196F3 !important;
+}
