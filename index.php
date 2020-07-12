@@ -3,6 +3,41 @@
 
 error_reporting(E_ALL);
 
+$nama_folder = basename(__DIR__);
+
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+
+	$folder_databases = realpath(dirname(dirname(dirname(__DIR__)))).''.DIRECTORY_SEPARATOR.''.'databases'.''.DIRECTORY_SEPARATOR.'';
+	$folder_session = realpath(dirname(dirname(dirname(__DIR__)))).''.DIRECTORY_SEPARATOR.''.'databases'.''.DIRECTORY_SEPARATOR.''.'session'.''.DIRECTORY_SEPARATOR.'';  
+
+    if (!file_exists($folder_databases)) {
+		@mkdir($folder_databases, 0777);
+	}
+
+	if (!file_exists($folder_session)) {
+		@mkdir($folder_session, 0777);
+	}
+
+	$direktori_session = realpath(dirname(dirname(dirname(__DIR__)))).''.DIRECTORY_SEPARATOR.''.'databases'.''.DIRECTORY_SEPARATOR.''.'session'.''.DIRECTORY_SEPARATOR.''.$nama_folder.''.DIRECTORY_SEPARATOR.'';
+
+} else {
+
+	$folder_session = realpath(dirname(dirname(__DIR__))).''.DIRECTORY_SEPARATOR.''.'databases'.''.DIRECTORY_SEPARATOR.''.'session'.''.DIRECTORY_SEPARATOR.'';
+
+	if (!file_exists($folder_session)) {
+		@mkdir($folder_session, 0777);
+	}
+	
+	$direktori_session = realpath(dirname(dirname(__DIR__))).''.DIRECTORY_SEPARATOR.''.'databases'.''.DIRECTORY_SEPARATOR.''.'session'.''.DIRECTORY_SEPARATOR.''.$nama_folder.''.DIRECTORY_SEPARATOR.'';
+
+}
+
+if (!file_exists($direktori_session)) {
+	@mkdir($direktori_session, 0777);
+}
+
+ini_set('session.save_path', $direktori_session);
+
 @session_start();
 
 require __DIR__ . '/Ez/Loader.php';

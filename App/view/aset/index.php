@@ -43,4 +43,4 @@
     var max = <?= $max; ?>;
     var token = '<?= str_replace(["\n","\r"], '', session('usertoken')); ?>';
 </script>
-<script type="text/javascript" src="/kuliah/simonyet/assets/js/monyet.js?v=<?= sha1(microtime(true)); ?>"></script>
+<script type="text/javascript" src="<?= url('assets/js/monyet.js?v='.sha1(microtime(true))) ?>"></script>

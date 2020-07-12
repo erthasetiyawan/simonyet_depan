@@ -27,13 +27,22 @@
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
                             <li class="<?= (isset($page) and $page == 'home') ? 'active' : null ?>">
-                                <a href="<?= url(); ?>">Home</a>
+                                <a href="<?= url(); ?>">
+                                    <i class="fa fa-home"></i>
+                                    Home
+                                </a>
                             </li>
                             <li class="<?= (isset($page) and $page == 'aset') ? 'active' : null ?>">
-                                <a href="<?= url('app/aset/index'); ?>">Data Aset</a>
+                                <a href="<?= url('app/aset/index'); ?>">
+                                    <i class="fa fa-building"></i>
+                                    Daftar Aset
+                                </a>
                             </li>
-                            <li>
-                                <a href="">Data Penyewa</a>
+                            <li class="<?= (isset($page) and $page == 'penyewa') ? 'active' : null ?>">
+                                <a href="<?= url('app/penyewa/index'); ?>">
+                                    <i class="fa fa-users"></i>
+                                    Daftar Penyewa
+                                </a>
                             </li>
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
