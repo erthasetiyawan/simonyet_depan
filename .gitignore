@@ -2,4 +2,3 @@ error.log
 .env
 vendor/*
 composer.lock
-admin/*
