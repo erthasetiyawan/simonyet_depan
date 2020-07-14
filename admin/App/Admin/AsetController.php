@@ -35,7 +35,7 @@ class AsetController extends BaseController
 			'data' => $this->pushArray($sql_aset)
 		];
 
-	    View::render('App.admin.view.aset.index', $data);
+	    View::render('App.Admin.view.aset.index', $data);
 	}
 
 	public function getTambah()
@@ -48,7 +48,7 @@ class AsetController extends BaseController
 			'tarif' => $this->pushArray("select * from tarif")
 		];
 
-	    View::render('App.admin.view.aset.tambah', $data);
+	    View::render('App.Admin.view.aset.tambah', $data);
 	}
 
 	public function ajaxPostSimpan()

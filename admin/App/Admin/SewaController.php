@@ -39,7 +39,7 @@ class SewaController extends BaseController
 			'data' => $this->pushArray($sql_aset)
 		];
 
-	    View::render('App.admin.view.sewa.index', $data);
+	    View::render('App.Admin.view.sewa.index', $data);
 	}
 
 	public function getApprove()
